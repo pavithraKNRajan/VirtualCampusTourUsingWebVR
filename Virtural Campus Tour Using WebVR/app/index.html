@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>360° Four-Directional Navigation • A-Frame</title>
+  <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="script.js" defer></script> <!-- Linking external JS file -->
+</head>
+<body>
+  <a-scene>
+    <!-- Assets -->
+    <a-assets>
+      <img id="sky-1" src="https://cdn.glitch.global/bdbd45de-f900-47e2-982a-006ab6cc446c/Entrance1.jpg?v=1747742415099" />
+      <img id="sky-2" src="https://cdn.glitch.global/bdbd45de-f900-47e2-982a-006ab6cc446c/Entrance2.jpg?v=1747742412398" />
+      <img id="sky-3" src="https://cdn.glitch.global/bdbd45de-f900-47e2-982a-006ab6cc446c/Ground.jpg?v=1747742421469" />
+      <img id="sky-4" src="https://cdn.glitch.global/bdbd45de-f900-47e2-982a-006ab6cc446c/Canteen.jpg?v=1747742408571" />
+      <img id="sky-5" src="https://cdn.glitch.global/bdbd45de-f900-47e2-982a-006ab6cc446c/Building1.jpg?v=1747742419925" />
+      <img id="sky-6" src="https://cdn.glitch.global/bdbd45de-f900-47e2-982a-006ab6cc446c/Building2.jpg?v=1747742408387" />
+      <img id="sky-7" src="https://cdn.glitch.global/e36af32a-493e-44f6-a171-da3cc364697f/Pano_lab.jpg?v=1748093098381" />
+      <img id="sky-8" src="https://cdn.glitch.global/e36af32a-493e-44f6-a171-da3cc364697f/Gate2.jpg?v=1748093571308" />
+      <img id="sky-9" src="https://cdn.glitch.global/e36af32a-493e-44f6-a171-da3cc364697f/Gate1.jpg?v=1748093582488" />
+
+      
+      <img id="arrow-forward" src="https://cdn.glitch.global/38873501-dd7a-400b-b164-aa2505bb435b/Forw_arw.png?v=1741149418453" />
+      <img id="arrow-backward" src="https://cdn.glitch.global/38873501-dd7a-400b-b164-aa2505bb435b/Back_arw.png?v=1741150151569" />
+      <img id="arrow-left" src="https://cdn.glitch.global/38873501-dd7a-400b-b164-aa2505bb435b/Left_arw.png?v=1741875028991" />
+      <img id="arrow-right" src="https://cdn.glitch.global/38873501-dd7a-400b-b164-aa2505bb435b/Right_arw.png?v=1741875037081" />
+    </a-assets>
+
+    <!-- Background -->
+    <a-sky id="sky" src="#sky-9"></a-sky>
+
+    <!-- Info Panel -->
+    <a-entity id="info-card" position="0 1.6 -1.5">
+      <a-plane width="1.6" height="0.7" color="transparent" opaque="0.2"></a-plane>
+      <a-text id="info-text" value="ENTRENCE: Start" align="center" position="0 0 0.01" width="3.0" color="black"></a-text>
+    </a-entity>
+
+    <!-- Navigation Arrows -->
+    <a-plane id="arrowforward" position="0 1.2 -1.5" rotation="0 0 0" width="0.3" height="0.3" src="#arrow-forward"
+             transparent="true" material="alphaTest: 0.5" shadow="cast: true"></a-plane>
+    
+    <a-plane id="arrowbackward" position="0 1.2 1.5" rotation="0 180 0" width="0.3" height="0.3" src="#arrow-backward"
+             transparent="true" material="alphaTest: 0.5" shadow="cast: true"></a-plane>
+    
+    <a-plane id="arrowleft" position="-1.5 1.2 0" rotation="0 90 0" width="0.3" height="0.3" src="#arrow-left"
+             transparent="true" material="alphaTest: 0.5" shadow="cast: true"></a-plane>
+    
+    <a-plane id="arrowright" position="1.5 1.2 0" rotation="0 -90 0" width="0.3" height="0.3" src="#arrow-right"
+             transparent="true" material="alphaTest: 0.5" shadow="cast: true"></a-plane>
+
+    <!-- Camera -->
+    <a-camera position="0 1.6 0">
+      <a-cursor></a-cursor>
+    
+
+  <!-- Attach the hotspot panel to the camera -->
+  
+    </a-camera>
+    
+    
+  </a-scene>
+  <!-- Fixed-position chatbot iframe -->
+<!-- Chat Toggle Button -->
+  
+<!-- Hotspot Toggle Button -->
+<button id="hotspot-toggle" onclick="toggleHotspotMenu()" style="
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  background: #009688;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+">
+  Hotspots
+</button>
+
+<!-- Hotspot Dropdown Menu -->
+<div id="hotspot-menu" style="
+  display: none;
+  position: fixed;
+  top: 70px;
+  left: 20px;
+  z-index: 1000;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  padding: 10px;
+  width: 200px;
+">
+  <div onclick="teleportTo(1)" style="cursor: pointer; padding: 5px;">Entrance</div>
+  <div onclick="teleportTo(4)" style="cursor: pointer; padding: 5px;">Canteen</div>
+  <div onclick="teleportTo(3)" style="cursor: pointer; padding: 5px;">Ground</div>
+  <div onclick="teleportTo(7)" style="cursor: pointer; padding: 5px;">Lab</div>
+</div>
+
+<button id="chat-toggle-button" onclick="toggleChat()" style="
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  z-index: 1000;
+  padding: 12px;
+  border: none;
+  border-radius: 50%;
+  background: #1876d2;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+">
+  <span id="chat-icon" class="material-icons">mode_comment</span>
+</button>
+
+<!-- Chatbot iframe -->
+<iframe id="chatbot-frame"
+  src="https://vce-chatbot.vercel.app/"
+  style="
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
+    border-radius: 10px;
+    border: none;
+    display: none;
+    z-index: 999;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    width: 350px;
+    height: 450px;
+    max-width: 90vw;
+    max-height: 70vh;
+">
+</iframe>
+
+
+<script>
+  function toggleChat() {
+    const frame = document.getElementById("chatbot-frame");
+    const icon = document.getElementById("chat-icon");
+
+    const isVisible = frame.style.display === "block";
+
+    // Toggle visibility
+    frame.style.display = isVisible ? "none" : "block";
+
+    // Swap icon
+    icon.textContent = isVisible ? "mode_comment" : "close";
+  }
+</script>
+
+
+
+</body>
+</html>
